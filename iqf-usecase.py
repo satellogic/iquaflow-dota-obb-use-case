@@ -52,7 +52,7 @@ experiment = ExperimentSetup(
         'tracking_uri':'file:///work/mlruns'
     },
     extra_train_params      = {
-        'cu':['0,1,2,3'],
+        'cu':['0,1,2,3,4,5'],
         'ds': ['dota10'],
         'model':[
             'fcos',

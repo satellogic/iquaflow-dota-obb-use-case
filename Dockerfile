@@ -17,6 +17,15 @@ ENV PATH=/usr/local/nvidia/bin:$PATH
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
+RUN apt-key del 7fa2af80 && \
+	rm -f /etc/apt/sources.list.d/cuda.list && \
+	rm -f /etc/apt/sources.list.d/nvidia-ml.list && \
+	apt-get update -y && apt-get install wget -y && \
+	wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/$(uname -m)/cuda-keyring_1.0-1_all.deb && \
+	dpkg -i cuda-keyring_1.0-1_all.deb && \
+	apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub && \
+	apt update -y
+
 RUN apt-get update && apt-get install -y git ninja-build libglib2.0-0 libsm6 libxrender-dev libxext6 && \
 	apt-get update && \
 	apt-get install ffmpeg libsm6 libxext6 -y && \
@@ -43,7 +52,8 @@ RUN cd /work/OBBDetection/BboxToolkit && pip install -v -e . && \
 
 RUN pip install ipykernel jupyterlab rasterio mlflow
 
-RUN conda create -n iqf python=3.6 -q -y && \
-	conda run -n iqf pip install git+https://gitlab+deploy-token-45:FKSA3HpmgUoxa5RZ69Cf@git.satellogic.team/iqf/iquaflow-@add-testds
+RUN conda create -n iqf python=3.6 -q -y
+RUN conda run -n iqf pip install git+https://github.com/satellogic/iquaflow.git
+# RUN cd iquaflow && conda run -n iqf pip install . && cd ..
 
 CMD ["/bin/bash", "-c", "./start.sh && /bin/bash"]
