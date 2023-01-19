@@ -1,6 +1,7 @@
 # iq-dota-obb-use-case
 
 This use case is a study of oriented object detection performance degradation when the input images are compressed.
+Paper availabe [here](https://arxiv.org/pdf/2301.05892.pdf).
 ____________________________________________________________________________________________________
 
 
